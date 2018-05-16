@@ -4,32 +4,33 @@ import matplotlib.pyplot as plt
 mutationRates = [0,100]
 rates = []
 times = []
+numTimes = 1
 
 for rate in range(mutationRates[0],mutationRates[1]):
     x = 0
-    tempTimes = []
+    tempGenerations = []
 
-    while x < 10:
+    while x < numTimes:
         startTime = time.time()
         generations = helloWorldGA.main(rate,100)
         endTime = time.time()
         Time = endTime - startTime
         print("With a mutation rate of " + str(rate) + " it took " + str(generations) + " generations and "+ str(Time) + " seconds")
-        tempTimes.append(Time)
+        tempGenerations.append(generations)
         x += 1
 
-    meanTime = sum(tempTimes) / len(tempTimes)
+    meanGenerations = sum(tempGenerations) / len(tempGenerations)
 
     rates.append(rate)
-    times.append(meanTime)
+    times.append(meanGenerations)
 
 x = rates
-y = times
+y = meanGenerations
 
-plt.plot(x, y, label='Time to create "Hello World"', color = 'b')
+plt.plot(x, y, label='Generations to create "Hello World"', color = 'b')
 
 plt.xlabel('Mutation Rate')
-plt.ylabel;('Time to evolve to print "Hello World"')
+plt.ylabel;('Generations to evolve to print "Hello World"')
 plt.title('How mutation rate effects evolution')
 plt.legend()
 plt.show()
