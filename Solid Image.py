@@ -8,16 +8,20 @@
 # TODO: Print the alleles that were passed on
 
 import random,time
+
+import pathlib
+
+import os
 from PIL import Image, ImageColor
 
 startTime = time.time()
-targetString = "FF0000"
+targetString = "FFAABB"
 letters = "0123456789ABCDEF"
 startingPopulation = []
 startingPopSize = 100  # The size of the starting popoulation
 newGen = []
 randomlyGenerated = []
-mutationRate = 100 #Mutation rate in percent
+mutationRate = 36 #Mutation rate in percent
 
 def randChar():
     return letters[random.randint(0,len(letters)-1)]
@@ -122,9 +126,10 @@ fitnessList = evalfitness(startingPopulation)
 intermediatePop = findMostFit(startingPopulation, fitnessList)
 elite = findElite(startingPopulation)
 
-def generateImage(individual):
+def generateImage(name,individual):
     img = Image.new('RGB', (60, 60), color = ImageColor.getrgb("#" + individual))
-    img.save("Resources/Generated/" + str(generations) + ".png")
+    img.save("Resources/Generated/Generation" + str(generations) + "/" + str(name) + ".png")
+
 generations = 0
 
 while targetString not in newGen:  # Main loop
@@ -137,12 +142,17 @@ while targetString not in newGen:  # Main loop
     intermediatePop = mutate(intermediatePop)
     #print(newGen)
     print(newGen[x] + " | " + str(fitnessList[x]))
-    generateImage(newGen[x])
-    print(newGen[x])
+    #generateImage(generations,newGen[x])
+    os.makedirs('Resources/Generated/Generation' + str(generations))
+    for individual in newGen:
+        generateImage(individual, individual)
     generations += 1
 
 endTime = time.time()
 elapsedTime = endTime - startTime
+os.makedirs('Resources/Generated/Generation' + str(generations))
+for individual in newGen:
+    generateImage(individual, individual)
 # print(newGen)
 # print(fitnessList)
 
