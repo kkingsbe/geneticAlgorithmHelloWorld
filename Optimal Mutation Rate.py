@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 mutationRates = [0,100]
 rates = []
 times = []
-numTimes = 1
+numTimes = 20
 
 for rate in range(mutationRates[0],mutationRates[1]):
     x = 0
-    tempGenerations = []
+    tempTimes = []
 
     while x < numTimes:
         startTime = time.time()
@@ -16,18 +16,18 @@ for rate in range(mutationRates[0],mutationRates[1]):
         endTime = time.time()
         Time = endTime - startTime
         print("With a mutation rate of " + str(rate) + " it took " + str(generations) + " generations and "+ str(Time) + " seconds")
-        tempGenerations.append(generations)
+        tempTimes.append(generations)
         x += 1
 
-    meanGenerations = sum(tempGenerations) / len(tempGenerations)
+    meanTime = sum(tempTimes) / len(tempTimes)
 
     rates.append(rate)
-    times.append(meanGenerations)
+    times.append(meanTime)
 
 x = rates
-y = meanGenerations
+y = times
 
-plt.plot(x, y, label='Generations to create "Hello World"', color = 'b')
+plt.plot(x, y, label='Generaions to create "Hello World"', color = 'b')
 
 plt.xlabel('Mutation Rate')
 plt.ylabel;('Generations to evolve to print "Hello World"')
